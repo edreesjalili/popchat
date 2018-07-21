@@ -38,6 +38,7 @@ class Server {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
 
+    app.use('/config', express.static(__dirname + '/server/config'));
     app.use(express.static(path.join(__dirname, '/dist')));
     app.use(flash());
     app.set('port', port);

@@ -35,17 +35,18 @@ const conversationController = (Conversation) => {
   
   const findConversations = function(req, res) {
 
-    if(!req.params.userId) {
+    if(!req.query.userId) {
       res.status(400).send("Bad Request");
       return;    
     }
-    Conversation.find({ userIds: { $in: req.params.userId} }, function(err, conversations) {
+    Conversation.find({ userIds: { $in: req.query.userId} }, function(err, conversations) {
       if (err) {
         res.status(500).send(err);
         return;
       }
       
-    req.json(conversations);
+    res.json(conversations);
+    
     });
   }
 

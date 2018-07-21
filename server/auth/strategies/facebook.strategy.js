@@ -46,6 +46,7 @@ module.exports = function() {
                 email: profile.emails[0].value,
                 profileImageUrl: profile.photos[0].value,
                 points: 0,
+                asking: true,
                 oauth: {
                   platform: 'facebook',
                   id: +profile.id,
