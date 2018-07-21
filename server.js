@@ -4,6 +4,10 @@ const express = require('express'),
       mongoose = require('mongoose'),
       bodyParser = require('body-parser'),
       session = require('express-session'),
+      passport = require('passport'),
+      cookieParser = require('cookie-parser'),
+      csrf = require('csurf'),
+      flash = require('connect-flash'),
       app = express(),
       port = process.env.PORT || 3000,
       env = process.env.ENV || 'development',
@@ -18,6 +22,7 @@ class Server {
    */
   constructor() {
     this.initExpressMiddleware();
+    this.initAuthentication();
     this.initDatabase();
     this.initRoutes();
     this.start();
@@ -31,8 +36,19 @@ class Server {
     app.use(bodyParser.urlencoded({extended: true}));
 
     app.use(express.static(path.join(__dirname, '/dist')));
-
+    app.use(flash());
     app.set('port', port);
+  }
+
+  initAuthentication() {
+    app.use(session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    require('./server/auth/auth.controller')(passport);
   }
 
   /**
@@ -53,8 +69,16 @@ class Server {
    * Initalizes the routers for the API, auth, and passes app routing off to the client-side router.
    */
   initRoutes() {
+    const authRouter = require('./server/auth/auth.routes')
+    app.use('/auth', authRouter);
+
     const userRouter = require('./server/api/user/user.routes')(User);
     app.use('/api/v1/users', userRouter);
+
+    //TODO - Remove
+    app.get('/conversations', (req, res) => {
+      res.send('Conversations works');
+    });
 
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, '/dist/index.html'));
