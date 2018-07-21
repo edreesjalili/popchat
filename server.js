@@ -53,7 +53,8 @@ class Server {
    * Initalizes the routers for the API, auth, and passes app routing off to the client-side router.
    */
   initRoutes() {
-    //TODO
+    const userRouter = require('./server/api/user/user.routes')(User);
+    app.use('/api/v1/users', userRouter);
 
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, '/dist/index.html'));
