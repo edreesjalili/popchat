@@ -10,7 +10,7 @@ export class ConversationService {
 
   constructor(private http: HttpClient) { }
   getConversation(userId: string): Observable<Conversation> {
-    return this.http.get(`/api/v1/conversations/${userId}`).pipe(
+    return this.http.get(`/api/v1/conversations/?userId=${userId}`).pipe(
       map((response: any) => {
         return new Conversation(response);
       }),
