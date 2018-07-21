@@ -11,6 +11,7 @@ const express = require('express'),
       app = express(),
       port = process.env.PORT || 3000,
       env = process.env.ENV || 'development',
+      seeder = require('./server/lib/seed/seeder'),
       
       User = require('./server/api/user/user.model');
 
@@ -61,6 +62,9 @@ class Server {
       }
       else {
         console.log('Connected to the DB.');
+        if ('development' === process.env.ENV) {
+          seeder.init();
+        }
       }
     });
   }
@@ -74,11 +78,6 @@ class Server {
 
     const userRouter = require('./server/api/user/user.routes')(User);
     app.use('/api/v1/users', userRouter);
-
-    //TODO - Remove
-    app.get('/conversations', (req, res) => {
-      res.send('Conversations works');
-    });
 
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, '/dist/index.html'));
