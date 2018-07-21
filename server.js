@@ -50,7 +50,7 @@ class Server {
   }
 
   /**
-   * Initalizes the routers for the API, auth, and passes app routing off to the client-side router.
+   * Initializes the routers for the API, auth, and passes app routing off to the client-side router.
    */
   initRoutes() {
     const userRouter = require('./server/api/user/user.routes')(User);

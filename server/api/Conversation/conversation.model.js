@@ -1,10 +1,9 @@
 const mongoose = require('mongoose'),
-      Schema = mongoose.Schema;
+  Schema = mongoose.Schema;
 
-const userModel = new Schema({
-  userIds:{
-    type:[Schema.ObjectId]
-
+const conversationModel = new Schema({
+  userIds: {
+    type: [Schema.ObjectId]
   },
   roomId:
   {
@@ -13,11 +12,13 @@ const userModel = new Schema({
   points: {
     type: Number,
     default: 0
-  },
-
-  lastUpdate: {
-    type: Date
   }
-});
+},
+  {
+    timestamps: true
+  });
+
+conversationModel.static('getNextConversation', cb => this.find({ userIds: { $size: 1 } }, null, { sort: { createdAt: 1 }, limit: 1 }, cb));
+
 
 module.exports = mongoose.model('Conversation', conversationModel);
