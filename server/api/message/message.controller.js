@@ -18,7 +18,7 @@ const messageController = (Message) => {
   };
 
   /**
-   * Middleware for finding all messages for a given conversation ID.
+   * Finds all messages for a given conversation ID.
    * @param {*} req - The request.
    * @param {*} res - The response.
    */

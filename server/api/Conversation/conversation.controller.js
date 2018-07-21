@@ -1,3 +1,5 @@
+const Chatkit = require('@pusher/chatkit-server');
+
 const conversationController = (Conversation) => {
   const createConversation = (req, res) => {
     if (!req.body || !req.body.question) {
@@ -24,6 +26,7 @@ const conversationController = (Conversation) => {
       } else {
         conversation.userIds.push(req.thisUser);
         conversation.save(saveErr, savedConversation => {
+          chatkit
           // logic for adding to pusher api
         });
       }
