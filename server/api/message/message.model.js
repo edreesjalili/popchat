@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
       Schema = mongoose.Schema,
-      ObjectId = Schema.ObjectId;
+      ObjectId = Schema.Types.ObjectId;
 
 const messageModel = new Schema({
   message: {
@@ -18,10 +18,10 @@ const messageModel = new Schema({
   conversationId: {
     type: ObjectId,
     required: true
-  }
+  },
   sendDate: {
-    type: Date
-    required: true    
+    type: Schema.Types.Date,
+    required: true
   }
 });
 
