@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
-      User = require('../../api/users/user.model'),
-      Conversation = require('../../api/Conversation/conversation.model');
+      User = require('../../api/user/user.model'),
+      Conversation = require('../../api/conversation/conversation.model');
 
 class Seeder {
 
