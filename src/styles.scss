@@ -37,3 +37,39 @@
   '_popover',
   '_carousel',
   '_utilities';
+
+.pc-btn-dark {
+  color: $gray-100;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.pc-btn-facebook {
+  @extend .pc-btn-dark;
+  background-color: $blue-facebook;
+
+  &:hover {
+    background-color: darken($blue-facebook, 10%);
+  }
+}
+
+.pc-btn-google {
+  @extend .pc-btn-dark;
+  background-color: $blue-google;
+
+  &:hover {
+    background-color: darken($blue-google, 10%);
+  }
+}
+
+.pc-btn-twitter {
+  @extend .pc-btn-dark;
+  background-color: $blue-twitter;
+
+  &:hover {
+    background-color: darken($blue-twitter, 10%);
+  }
+}
+  
