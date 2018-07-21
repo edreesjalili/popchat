@@ -44,6 +44,9 @@ const userModel = new Schema({
   },
   lastUpdate: {
     type: Date
+  },
+  asking: {
+    type: Boolean
   }
 });
 
