@@ -6,6 +6,7 @@ export class User {
   email: string;
   profileImageUrl: string;
   points: number;
+  asking: boolean;
   oauth: Oauth;
   lastLogin?: Date;
   lastUpdate?: Date;
@@ -16,6 +17,7 @@ export class User {
     email: string,
     profileImageUrl: string,
     points?: number,
+    asking: boolean,
     oauth: Oauth,
     lastLogin?: Date,
     lastUpdate?: Date
@@ -25,6 +27,7 @@ export class User {
     this.email = options.email;
     this.profileImageUrl = options.profileImageUrl;
     this.points = options.points || 0;
+    this.asking = options.asking;
     this.oauth = options.oauth;
     this.lastLogin = options.lastLogin || undefined;
     this.lastUpdate = options.lastUpdate || undefined;

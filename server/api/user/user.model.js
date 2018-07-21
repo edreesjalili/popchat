@@ -22,6 +22,9 @@ const userModel = new Schema({
     type: Number,
     default: 0
   },
+  asking: {
+    type: Boolean
+  },
   oauth: {
     type: {
       platform: {

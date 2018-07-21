@@ -8,11 +8,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { UserService } from './user/shared/user.service';
+import { NewConversationComponent } from './new-conversation/new-conversation.component';
+import { AuthGuardService } from './auth/shared/auth-guard.service';
+import { AuthService } from './auth/shared/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    NewConversationComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +25,8 @@ import { UserService } from './user/shared/user.service';
     HttpClientXsrfModule
   ],
   providers: [
+    AuthGuardService,
+    AuthService,
     UserService
   ],
   bootstrap: [AppComponent]

@@ -1,22 +1,22 @@
-{
-    "questions":[ "If you could have an endless supply of any food, what would you get?"
-        , "If you were an animal, what would you be and why?"
-        , "What is one goal you’d like to accomplish during your lifetime?"
-        , "When you were little, who was your favorite super hero and why?"
-        , "Who is your hero? (a parent, a celebrity, an influential person in one’s life)"
-        , "What’s your favorite thing to do in the summer?"
-        , "If they made a movie of your life, what would it be about and which actor would you want to play you?"
-        , "If you were an ice cream flavor, which one would you be and why?"
-        , "What’s your favorite cartoon character, and why?"
-        , "If you could visit any place in the world, where would you choose to go and why?"
-        , "What’s the ideal dream job for you?"
-        , "Are you a morning or night person?"
-        , "What are your favorite hobbies?"
-        , "What are your pet peeves or interesting things about you that you dislike?"
-        , "What’s the weirdest thing you’ve ever eaten?"
-        , "Name one of your favorite things about someone in your family."
-        , "Tell us about a unique or quirky habit of yours."
-        , "If you had to describe yourself using three words, it would be…"
-        , "If someone made a movie of your life would it be a drama, a comedy, a romantic-comedy, action film, or science fiction?"
-        , "If I could be anybody besides myself, I would be…" ]
-    }
+[
+	"If you could have an endless supply of any food, what would you get?",
+	"If you were an animal, what would you be and why?",
+	"What is one goal you'd like to accomplish during your lifetime?",
+	"When you were little, who was your favorite super hero and why?",
+	"Who is your hero? (a parent, a celebrity, an influential person in your life)",
+	"What's your favorite thing to do in the summer?",
+	"If they made a movie of your life, what would it be about and which actor would you want to play you?",
+	"If you were an ice cream flavor, which one would you be and why?",
+	"What's your favorite cartoon character, and why?",
+	"If you could visit any place in the world, where would you choose to go and why?",
+	"What's the ideal dream job for you?",
+	"Are you a morning or night person?",
+	"What are your favorite hobbies?",
+	"What are your pet peeves or interesting things about you that you dislike?",
+	"What's the weirdest thing you've ever eaten?",
+	"Name one of your favorite things about someone in your family.",
+	"Tell us about a unique or quirky habit of yours.",
+	"If you had to describe yourself using three words, it would be…",
+	"If someone made a movie of your life would it be a drama, a comedy, a romantic-comedy, action film, or science fiction?",
+	"If I could be anybody besides myself, I would be…"
+]
