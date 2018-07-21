@@ -13,6 +13,8 @@ const express = require('express'),
       env = process.env.ENV || 'development',
       
       User = require('./server/api/user/user.model');
+      Conversation = require('./server/api/conversation/conversation.model');
+
 
 class Server {
 
@@ -74,6 +76,9 @@ class Server {
 
     const userRouter = require('./server/api/user/user.routes')(User);
     app.use('/api/v1/users', userRouter);
+
+    const conversationRouter = require('./server/api/conversation/conversation.routes')(Conversation);
+    app.use('/api/v1/conversations', conversationRouter);
 
     //TODO - Remove
     app.get('/conversations', (req, res) => {
