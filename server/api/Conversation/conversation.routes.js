@@ -5,11 +5,12 @@ const routes = function(Conversation) {
   const conversationController = require('./conversation.controller')(Conversation);
 
   conversationRouter.route('/')
-    .post(conversationController.mkNewConversation)
-    .get(conversationController.mkNewConversation)
-  conversationRouter.route('/:userId')
-    .get(conversationController.getSpecificConversation)
-    .patch(conversationController.updateSpecificConversation)
+    .post(conversationController.createConversation)
+    .get(conversationController.findConversations)
+  conversationRouter.route('/:conversationId')
+    // .get(conversationController.getConversation)
+    //todo uncommment when function ready
+    // .patch(conversationController.updateConversation)
     
 
   return conversationRouter;

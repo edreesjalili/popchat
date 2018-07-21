@@ -14,6 +14,7 @@ const conversationController = (Conversation) => {
     });
   };
 
+
   const joinNextConversation = (req, res) => {
     Conversation.getNextConversation((err, conversation) => {
       if (err) {
@@ -28,10 +29,32 @@ const conversationController = (Conversation) => {
       }
     });
   };
+  
+  const findConversations = function(req, res) {
+
+    if(!req.query.userId) {
+      res.status(400).send("Bad Request");
+      return;    
+    }
+    Conversation.find({ userIds: { $in: req.query.userId} }, function(err, conversations) {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      
+    res.json(conversations);
+    
+    });
+  }
+
+
   return {
     createConversation,
-    joinNextConversation
+    joinNextConversation,
+    findConversations
+
   };
+
 };
 
-module.export = conversationController
+module.exports = conversationController

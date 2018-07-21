@@ -14,6 +14,8 @@ const express = require('express'),
       seeder = require('./server/lib/seed/seeder'),
       
       User = require('./server/api/user/user.model');
+      Conversation = require('./server/api/conversation/conversation.model');
+
 
 class Server {
 
@@ -79,6 +81,9 @@ class Server {
 
     const userRouter = require('./server/api/user/user.routes')(User);
     app.use('/api/v1/users', userRouter);
+
+    const conversationRouter = require('./server/api/conversation/conversation.routes')(Conversation);
+    app.use('/api/v1/conversations', conversationRouter);
 
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, '/dist/index.html'));
