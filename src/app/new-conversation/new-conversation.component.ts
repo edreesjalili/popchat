@@ -12,7 +12,5 @@ export class NewConversationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //TODO - Remove. It's just for testing
-    this.authService.currentUser.asking = false;
   }
 }

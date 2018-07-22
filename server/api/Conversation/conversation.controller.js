@@ -2,27 +2,12 @@ const chatkit = require('../../lib/services/chatkit');
 
 const conversationController = (Conversation) => {
   const createConversation = (req, res) => {
-    if (!req.body || !req.body.question || !req.body.roomId) {
+    if (!req.body || !req.body.roomId) {
       res.status(400).send('Bad Request')
       return;
     }
 
-    conversation.userIds.push(req.thisUser);
-        const handleSave = (saveErr, savedConversation) => {
-          if (saveErr) {
-            res.status(500).send("Failed to save Conversation.");
-            return;
-          }
-          res.json(savedConversation);
-        }
-        chatkit.createRoom(req.thisUser, savedConversation.id, [req.thisUser], true)
-            .then(room => {
-              conversation.roomId = room.id
-              conversation.save(handleSave)
-            })
-            .catch(error => res.status(400).send('Failed to create chat room.'))
-
-    Conversation.create({ userIds: [req.thisUser], roomId: req.body.roomId }, (err, conversation) => {
+    Conversation.create({ userIds: [req.user._id], roomId: req.body.roomId }, (err, conversation) => {
       if (err) {
         res.status(500).send(err);
         return;
@@ -33,49 +18,66 @@ const conversationController = (Conversation) => {
 
 
   const joinNextConversation = (req, res) => {
-    Conversation.getNextConversation((err, conversation) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-      else if (!conversation) {
-        res.status(204).send('No Conversations');
-      }
-      else {
-        conversation.userIds.push(req.user._id);
-        conversation.save((saveErr, savedConversation) => {
-          console.log(conversation);
-          res.json(savedConversation);
-        })
+    Conversation.findOne({ 'userIds.1': req.user._id, hasAnswered: false }, (error, previousConvo) => {
+      if (previousConvo) {
+        res.json(previousConvo);
+      } else {
+        Conversation.getNextConversation((err, conversation) => {
+          if (err) {
+            res.status(500).send(err);
+          }
+          else if (!conversation) {
+            res.status(204).send('No Conversations');
+          }
+          else {
+            conversation.userIds.push(req.user._id);
+            conversation.save((saveErr, savedConversation) => {
+              res.json(savedConversation);
+            })
+          }
+        });
+
       }
     });
   };
-  
-  const getConversations = function(req, res) {
-    if(!req.query.userId) {
+
+  const getConversations = function (req, res) {
+    if (!req.query.userId) {
       res.status(400).send("Bad Request");
-      return;    
+      return;
     }
 
-    Conversation.find({ userIds: { $in: req.query.userId} }, function(err, conversations) {
+    Conversation.find({ userIds: { $in: req.query.userId } }, function (err, conversations) {
       if (err) {
         res.status(500).send(err);
         return;
       }
-      
-    res.json(conversations);
-    
+
+      res.json(conversations);
+
     });
   }
 
-  const getConversation = function(req, res) {
+  const getConversation = function (req, res) {
     res.json(req.thisConversation);
+  }
+
+  const updateConversation = function (req, res) {
+    Conversation.findByIdAndUpdate(id, { $set: req.body }, null, function (err, conversation) {
+      if (err) {
+        res.status(500).send('Failed to update conversation.');
+        return;
+      }
+      res.send(conversation);
+    });
   }
 
   return {
     createConversation,
     joinNextConversation,
     getConversations,
-    getConversation
+    getConversation,
+    updateConversation
   };
 };
 

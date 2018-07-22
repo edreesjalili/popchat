@@ -22,15 +22,9 @@ export class ConversationListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.conversationService.getConversationsForUser( this.authService.currentUser._id).subscribe((conversations: Conversation[]) =>
-    // {
-    //   this.conversations = conversations;
-    // } );
-    console.log(this.chatService.getConnection());
     this.chatService.getConnection()
       .then(currentUser => {
-        console.log(currentUser);
-        this.chatService.join(currentUser.rooms[0].id).then(room => console.log(room));
+        
       })
       .catch(error => console.log(error));
   }

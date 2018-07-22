@@ -1,7 +1,7 @@
 <div class="text-center">
   <h2>{{ askingUser?.firstName }}</h2>
   <img src="{{ askingUser?.profileImageUrl }}" alt="{{ askingUser?.firstName }}" class="rounded-circle mb-3">
-  <p>Some random question that Bob asked you?</p>
+  <p>{{question}}</p>
   <form class="mt-5" [formGroup]="answeringForm" (ngSubmit)="answerQuestion()">
     <div class="form-group">
       <input type="text" class="form-control form-control-lg" placeholder="Start talking with {{ askingUser?.firstName }}..." formControlName="answer">

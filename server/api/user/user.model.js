@@ -49,7 +49,8 @@ const userModel = new Schema({
     type: Date
   },
   asking: {
-    type: Boolean
+    type: Boolean,
+    default: true
   }
 });
 

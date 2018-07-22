@@ -6,7 +6,8 @@ const routes = function(Conversation) {
 
   conversationRouter.route('/')
     .post(conversationController.createConversation)
-    .get(conversationController.getConversations);
+    .get(conversationController.getConversations)
+    .patch(conversationController.updateConversation);
 
   conversationRouter.route('/join')
     .get(conversationController.joinNextConversation);
@@ -14,8 +15,6 @@ const routes = function(Conversation) {
   conversationRouter.use('/:conversationId', conversationController.getConversation);
   conversationRouter.route('/:conversationId')
     .get(conversationController.getConversation);
-    //todo uncommment when function ready
-    // .patch(conversationController.updateConversation)
 
   return conversationRouter;
 };

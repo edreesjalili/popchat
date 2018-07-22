@@ -49,7 +49,7 @@ export class ChatService {
 
   createRoom(question: string): Promise<any> {
     return this._currentUser.createRoom({
-        name: new Date().getMilliseconds(),
+        name: `${new Date().getMilliseconds()}`,
         private: false,
         addUserIds: [this.authService.currentUser._id]
       }).then(room => {

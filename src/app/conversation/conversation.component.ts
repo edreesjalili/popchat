@@ -34,7 +34,6 @@ export class ConversationComponent implements OnInit {
         this.conversationService.getConversation(params.get('id')))
     ).subscribe((conversation: Conversation) => {
       this.conversation = conversation;
-      console.log(conversation)
     });
   }
 

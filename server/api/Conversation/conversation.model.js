@@ -12,6 +12,10 @@ const conversationModel = new Schema({
   points: {
     type: Number,
     default: 0
+  }, 
+  hasAnswered: {
+    type: Boolean,
+    default: false
   }
 },
   {
@@ -19,7 +23,7 @@ const conversationModel = new Schema({
   });
 
 conversationModel.static('getNextConversation', function(cb) {
-  this.findOne({ userIds: { $size: 1 } }, null, { sort: { createdAt: 1 }}, cb)
+  this.findOne({ userIds: { $size: 1 }, hasAnswered: false }, null, { sort: { createdAt: 1 }}, cb)
 });
 
 

@@ -58,7 +58,7 @@ export class ConversationService {
   }
 
   createConversation(roomId: number): Observable<Conversation> {
-    return this.http.post('api/v1/conversation', { roomId }).pipe(
+    return this.http.post('api/v1/conversations', { roomId }).pipe(
       map(data => data as Conversation),
       catchError(error => this.handleError(error))
     );
@@ -72,6 +72,13 @@ export class ConversationService {
       catchError((error: any) => {
         return this.handleError(error);
       })
+    );
+  }
+
+  updateConversation(conversationId: string) {
+    return this.http.patch(`/api/v1/conversations/`, { conversationId, hasAnswered: true }).pipe(
+      map((data: Conversation) => data),
+      catchError(error => this.handleError(error))
     );
   }
 
