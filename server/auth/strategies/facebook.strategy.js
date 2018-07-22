@@ -1,6 +1,7 @@
 const passport = require('passport'),
       FacebookStrategy = require('passport-facebook').Strategy,
-      User = require('../../api/user/user.model');
+      User = require('../../api/user/user.model'),
+      chatkit = require('../../lib/services/chatkit');
 
 module.exports = function() {
   passport.use(new FacebookStrategy({
@@ -63,6 +64,12 @@ module.exports = function() {
                 }
 
                 return done(null, savedUser);
+              });
+
+              console.log(profile.name);
+
+              chatkit.createUser(profile.id, profile.name.givenName + profile.name.familyName).catch(function(err) {
+                console.log(err);
               });
             }
           });
