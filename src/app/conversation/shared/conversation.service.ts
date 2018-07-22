@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { throwError as observableThrowError, Observable, ReplaySubject } from 'rxjs';
+import { throwError as observableThrowError, Observable, ReplaySubject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Conversation } from './conversation';
+import * as Rx from 'rxjs'
+import { IChat } from './chat.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,12 +26,36 @@ export class ConversationService {
   getConversation(conversationId: string): Observable<Conversation> {
     return this.http.get(`/api/v1/conversations/${conversationId}`).pipe(
       map((response: any) => {
-        return new Conversation(response);
+        return new Conversation(response || {});
       }),
       catchError((error: any) => {
         return this.handleError(error)
       })
     );
+  }
+
+  mockConversations(): Observable<IChat[]> {
+    const messages: IChat[] = [
+      {
+        id: '1',
+        displayName: 'ibz',
+        email: 'ibz@',
+        type: 'human',
+        message: 'Hey! How\'s it going?',
+        createdAt: new Date(),
+        isMe: true,
+      } as IChat,
+      {
+        id: '2',
+        displayName: 'ed',
+        email: 'ibz@',
+        type: 'human',
+        message: 'Not much. wbu?',
+        createdAt: new Date(),
+        isMe: false,
+      } as IChat
+    ];
+    return of(messages);
   }
 
   getNextAvailableConversation(): Observable<Conversation> {
