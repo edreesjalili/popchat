@@ -19,6 +19,10 @@ export class ChatService {
     });
   }
 
+  isConnected(): boolean {
+    return !!this._currentUser;
+  }
+
   sendMessage(message: string, _roomId: string): Promise<any> {
     return this._currentUser.sendMessage({
       text: message,
