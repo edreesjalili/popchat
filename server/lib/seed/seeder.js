@@ -9,8 +9,10 @@ class Seeder {
    * @constructor
    */
   constructor() {
-    this.conversationSeedData = [];
+    this.conversationSeedData = [];    
+    this.userSeedData = [];
     this.generateConversationSeedData();
+    this.generateUserSeedData();
   }
 
   /**
@@ -25,6 +27,7 @@ class Seeder {
    */
   seed() {
     this.seedConversations();
+    this.seedUsers();
   }
 
   /**
@@ -49,6 +52,25 @@ class Seeder {
     });
   }
 
+  seedUsers() {
+    User.remove({}, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        console.log('Removed users.');
+        User.collection.insertMany(this.userSeedData, (err) => {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            console.log('Inserted users.');
+          }
+        });
+      }
+    });
+  }
+
   /**
    * Populates the array of seed conversations to insert.
    */
@@ -65,6 +87,51 @@ class Seeder {
     for (let conversation of conversations) {
       conversation._id = mongoose.Types.ObjectId();
       this.conversationSeedData.push(conversation);
+    }
+  }
+
+  generateUserSeedData()  {
+    let users = [
+      {
+        firstName: 'Ibrahim',
+        lastName: 'Butt',
+        email: 'ibzbutt@gmail.com',
+        points: 500,
+        lastLogin: new Date()
+      },
+      {
+        firstName: 'Hamza',
+        lastName: 'Ahmed',
+        email: 'hamza@hackmidwest.com',
+        points: 400,
+        lastLogin: new Date()
+      },
+      {
+        firstName: 'Ben',
+        lastName: 'C',
+        email: 'benc@hackmidwest.com',
+        points: 300,
+        lastLogin: new Date()
+      },
+      {
+        firstName: 'Ed',
+        lastName: 'Jalili',
+        email: 'ed@hackmidwest.com',
+        points: 250,
+        lastLogin: new Date()
+      },
+      {
+        firstName: 'Hung',
+        lastName: 'Nguyen',
+        email: 'hnguyen@hackmidwest.com',
+        points: 50,
+        lastLogin: new Date()
+      }
+    ];
+
+    for (let user of users) {
+      user._id = mongoose.Types.ObjectId();
+      this.userSeedData.push(user);
     }
   }
 }

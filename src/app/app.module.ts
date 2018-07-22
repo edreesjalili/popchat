@@ -13,6 +13,7 @@ import { AuthGuardService } from './auth/shared/auth-guard.service';
 import { AuthService } from './auth/shared/auth.service';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ConversationComponent } from './conversation/conversation.component';
     HomeComponent,
     NewConversationComponent,
     ConversationListComponent,
-    ConversationComponent
+    ConversationComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,

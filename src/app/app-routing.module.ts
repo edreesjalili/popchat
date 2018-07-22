@@ -5,6 +5,7 @@ import { NewConversationComponent } from './new-conversation/new-conversation.co
 import { AuthGuardService } from './auth/shared/auth-guard.service';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 const routes: Routes = [
   { 
@@ -25,6 +26,10 @@ const routes: Routes = [
   { 
     path: '', 
     component: HomeComponent, 
+  },
+  {
+    path: 'leaderboard',
+    component: LeaderboardComponent
   },
   { 
     path: '**', 
