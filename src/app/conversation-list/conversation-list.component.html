@@ -1,4 +1,12 @@
-<div class="padd">
+<div class="leaderboard">
+    <h1>
+      Conversations
+    </h1>
+    <ol>
+      <li *ngFor='let combo of combos'>
+        <mark>{{user.firstName}}</mark>
+        <small>{{user.points}}</small>
+      </li>
+    </ol>
+  </div>
   
-  <div *ngFor="let conversations of conversation">"list of conversations goes here"</div>
-</div>
