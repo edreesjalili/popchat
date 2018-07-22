@@ -1,5 +1,11 @@
-<ul id="message-list"></ul>
-<form id="message-form">
-  <input type='text' id='message-text'>
-  <input type="submit">
-</form>
+<div class="leaderboard">
+    <h1>
+      Conversations
+    </h1>
+    <ol>
+      <li *ngFor='let combo of combos'>
+        <mark>{{user.firstName}}</mark>
+        <small>{{user.points}}</small>
+      </li>
+    </ol>
+  </div>
