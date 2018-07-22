@@ -85,9 +85,21 @@ class Server {
     const conversationRouter = require('./server/api/conversation/conversation.routes')(Conversation);
     app.use('/api/v1/conversations', conversationRouter);
 
+    app.use('/conversations*', this.authRouteGuard);
+    app.use('/leaderboard', this.authRouteGuard);
+
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, '/dist/index.html'));
     });  
+  }
+
+  authRouteGuard(req, res, next) {
+    if (!req.isAuthenticated()) {
+      res.redirect('/');
+    }
+    else {
+      next();
+    }
   }
 
   /**

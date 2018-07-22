@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand mb-5 navbar-primary bg-gray-400 shadow">
+<nav *ngIf="authService.isAuthenticated()" class="navbar navbar-expand mb-5 navbar-primary bg-gray-400 shadow">
   <ul class="navbar-nav w-100 d-flex justify-content-around">
     <!-- <li class="nav-item">
       <a class="nav-link" routerLink="/settings">
