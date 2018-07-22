@@ -1,7 +1,7 @@
 import { Oauth } from './oauth';
 
 export class User {
-  _id: string;
+  _id?: string;
   firstName: string;
   lastName?: string;
   email: string;
@@ -13,6 +13,7 @@ export class User {
   lastUpdate?: Date;
 
   constructor(options: {
+    _id?: string,
     firstName: string,
     lastName?: string,
     email: string,
@@ -23,6 +24,7 @@ export class User {
     lastLogin?: Date,
     lastUpdate?: Date
   }) {
+    this._id = options._id || undefined;
     this.firstName = options.firstName;
     this.lastName = options.lastName || undefined;
     this.email = options.email;
