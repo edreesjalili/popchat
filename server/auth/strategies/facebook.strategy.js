@@ -63,13 +63,13 @@ module.exports = function() {
                   return done(err);
                 }
 
+                console.log(savedUser._id);
+
+                chatkit.createUser(savedUser._id, savedUser.givenName + savedUser.familyName).catch(function(err) {
+                  console.log(err);
+                });
+
                 return done(null, savedUser);
-              });
-
-              console.log(profile.name);
-
-              chatkit.createUser(profile.id, profile.name.givenName + profile.name.familyName).catch(function(err) {
-                console.log(err);
               });
             }
           });
