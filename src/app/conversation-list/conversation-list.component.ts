@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/shared/auth.service';
 import { ConversationService } from '../conversation/shared/conversation.service';
 import { Conversation } from '../conversation/shared/conversation';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-conversation-list',
@@ -14,15 +15,22 @@ export class ConversationListComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private conversationService: ConversationService
+    private conversationService: ConversationService,
+    private chatService: ChatService,
   ) { }
 
   ngOnInit() {
-    this.conversationService.getConversationsForUser( this.authService.currentUser._id).subscribe((conversations: Conversation[]) =>
-    {
-      this.conversations = conversations;
-    } );
+    // this.conversationService.getConversationsForUser( this.authService.currentUser._id).subscribe((conversations: Conversation[]) =>
+    // {
+    //   this.conversations = conversations;
+    // } );
+    console.log(this.chatService.getConnection())
+    this.chatService.getConnection()
+      .then(currentUser => {
+        console.log(currentUser)
+        this.chatService.join(currentUser.rooms[0].id).then(room => console.log(room));
+      })
+      .catch(error => console.log(error));
   }
 
 }
-
