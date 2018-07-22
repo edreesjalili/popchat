@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError as observableThrowError, Observable, ReplaySubject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Conversation } from './conversation';
-import * as Rx from 'rxjs'
 import { IChat } from './chat.interface';
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,7 @@ export class ConversationService {
         return <Conversation[]> response;
       }),
       catchError((error: any) => {
-        return this.handleError(error)
+        return this.handleError(error);
       })
     );
   }
@@ -29,7 +28,7 @@ export class ConversationService {
         return new Conversation(response || {});
       }),
       catchError((error: any) => {
-        return this.handleError(error)
+        return this.handleError(error);
       })
     );
   }
@@ -58,21 +57,28 @@ export class ConversationService {
     return of(messages);
   }
 
+  createConversation(roomId: number): Observable<Conversation> {
+    return this.http.post('api/v1/conversation', { roomId }).pipe(
+      map(data => data as Conversation),
+      catchError(error => this.handleError(error))
+    );
+  }
+
   getNextAvailableConversation(): Observable<Conversation> {
     return this.http.get('/api/v1/conversations/join').pipe(
       map((response: any) => {
         return new Conversation(response);
       }),
       catchError((error: any) => {
-        return this.handleError(error)
+        return this.handleError(error);
       })
     );
   }
 
   /**
    * Returns the user ID in the given array that isn't the provided user ID.
-   * @param userIds 
-   * @param userId 
+   * @param userIds The other userIds
+   * @param userId The provided userId
    */
   getOtherUserId(userIds: string[], userId: string): string {
     const index = userIds.indexOf(userId);
@@ -81,12 +87,11 @@ export class ConversationService {
 
   /**
    * @private
-   * 
    * Handles an error by creating a new observable that emits it.
    * @param {Response} error - The error.
    * @returns {Observable<any>} An observable that emits an error.
    */
   private handleError(error: Response): Observable<any> {
-    return observableThrowError(error)
+    return observableThrowError(error);
   }
 }

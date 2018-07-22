@@ -11,7 +11,7 @@ import { ChatService } from '../services/chat.service';
 })
 export class ConversationListComponent implements OnInit {
 
-  conversations : Conversation[];
+  conversations: Conversation[];
   combos = [];
 
 
@@ -26,10 +26,10 @@ export class ConversationListComponent implements OnInit {
     // {
     //   this.conversations = conversations;
     // } );
-    console.log(this.chatService.getConnection())
+    console.log(this.chatService.getConnection());
     this.chatService.getConnection()
       .then(currentUser => {
-        console.log(currentUser)
+        console.log(currentUser);
         this.chatService.join(currentUser.rooms[0].id).then(room => console.log(room));
       })
       .catch(error => console.log(error));

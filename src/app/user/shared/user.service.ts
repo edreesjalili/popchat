@@ -17,7 +17,7 @@ export class UserService {
         return <User[]> response;
       }),
       catchError((error: any) => {
-        return this.handleError(error)
+        return this.handleError(error);
       })
     );
   }
@@ -28,7 +28,7 @@ export class UserService {
         return new User(response);
       }),
       catchError((error: any) => {
-        return this.handleError(error)
+        return this.handleError(error);
       })
     );
   }
@@ -39,19 +39,19 @@ export class UserService {
         return new User(response);
       }),
       catchError((error: any) => {
-        return this.handleError(error)
+        return this.handleError(error);
       })
     );
   }
 
   /**
    * @private
-   * 
+   *
    * Handles an error by creating a new observable that emits it.
    * @param {Response} error - The error.
    * @returns {Observable<any>} An observable that emits an error.
    */
   private handleError(error: Response): Observable<any> {
-    return observableThrowError(error)
+    return observableThrowError(error);
   }
 }
