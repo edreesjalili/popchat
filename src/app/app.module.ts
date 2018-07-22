@@ -15,6 +15,7 @@ import { AuthService } from './auth/shared/auth.service';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { AskComponent } from './ask/ask.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
     NewConversationComponent,
     ConversationListComponent,
     ConversationComponent,
-    LeaderboardComponent
+    LeaderboardComponent,
+    AskComponent
   ],
   imports: [
     BrowserModule,
