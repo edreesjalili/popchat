@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { concatMap, map, catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { User } from '../../user/shared/user';
 import { ChatService } from '../../services/chat.service';
@@ -21,6 +21,9 @@ export class AuthGuardService implements CanActivate {
       return this.authService.getCurrentUser().pipe(
         map((user: User) => {
           return true;
+        }),
+        catchError((error: any) => {
+          return of(false);
         })
       );
     }
