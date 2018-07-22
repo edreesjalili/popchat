@@ -8,9 +8,10 @@ const routes = function(User) {
   userRouter.use('/:userId', userController.isAuthorized);
   userRouter.route('/:userId')
     .get(userController.getUser)
+    .patch(userController.updateUser);
 
   userRouter.route('/')
-    .get(userController.getUsers)
+    .get(userController.getUsers);
 
   return userRouter;
 };

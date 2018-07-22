@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as $ from 'jquery';
 
@@ -13,6 +14,7 @@ import { AuthGuardService } from './auth/shared/auth-guard.service';
 import { AuthService } from './auth/shared/auth.service';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,16 @@ import { ConversationComponent } from './conversation/conversation.component';
     HomeComponent,
     NewConversationComponent,
     ConversationListComponent,
-    ConversationComponent
+    ConversationComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientXsrfModule
+    HttpClientXsrfModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthGuardService,
