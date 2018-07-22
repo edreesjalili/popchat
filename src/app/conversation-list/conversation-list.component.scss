@@ -12,7 +12,7 @@ body {
   height: 100vh;
   margin: 0;  
   background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
-  color: #fff;
+  color: rgba(204, 204, 204, 0.35);
   font-family: 'Open Sans', sans-serif;  
 }
 
@@ -71,7 +71,7 @@ Leaderboard
         height: 20px;
         line-height: 20px;
         color: #c24448;
-        background: #fff;
+        background: rgba(204, 204, 204, 0.35);
         border-radius: 20px;
         text-align: center;
       }
