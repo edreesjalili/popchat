@@ -11,7 +11,7 @@ const routes = function(Conversation) {
   conversationRouter.route('/join')
     .get(conversationController.joinNextConversation);
 
-  conversationRouter.use('/:conversationId', conversationController.findConversation);
+  conversationRouter.use('/:conversationId', conversationController.getConversation);
   conversationRouter.route('/:conversationId')
     .get(conversationController.getConversation);
     //todo uncommment when function ready
