@@ -1,4 +1,4 @@
-<div *ngIf="!authService.currentUser?.asking">
+<div *ngIf="!authService.currentUser?.asking" class="text-center">
   <h2>{{ askingUser.firstName }}</h2>
   <img src="{{ askingUser.profileImageUrl }}" alt="{{ askingUser.firstName }}" class="rounded-circle mb-3">
   <p>Some random question that Bob asked you?</p>
@@ -8,7 +8,7 @@
     </div>
   </form>
 </div>
-<div *ngIf="authService.currentUser?.asking">
+<div *ngIf="authService.currentUser?.asking" class="text-center">
   <h2 class="mb-5">It's your turn to start a conversation</h2>
   <button class="btn btn-outline-primary mb-3 btn-block" *ngFor="let question of questions">{{ question }}</button>
 </div>
