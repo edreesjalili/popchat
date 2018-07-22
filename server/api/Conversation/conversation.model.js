@@ -18,7 +18,9 @@ const conversationModel = new Schema({
     timestamps: { createdAt: true, updatedAt: true }
   });
 
-conversationModel.static('getNextConversation', cb => this.find({ userIds: { $size: 1 } }, null, { sort: { createdAt: 1 }, limit: 1 }, cb));
+conversationModel.static('getNextConversation', function(cb) {
+  this.findOne({ userIds: { $size: 1 } }, null, { sort: { createdAt: 1 }}, cb)
+});
 
 
 module.exports = mongoose.model('Conversation', conversationModel);

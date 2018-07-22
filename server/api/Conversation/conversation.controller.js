@@ -43,6 +43,7 @@ const conversationController = (Conversation) => {
       else {
         conversation.userIds.push(req.user._id);
         conversation.save((saveErr, savedConversation) => {
+          console.log(conversation);
           res.json(savedConversation);
         })
       }

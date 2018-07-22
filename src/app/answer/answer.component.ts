@@ -3,6 +3,9 @@ import { ConversationService } from '../conversation/shared/conversation.service
 import { Conversation } from '../conversation/shared/conversation';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/shared/auth.service';
+import { UserService } from '../user/shared/user.service';
+import { User } from '../user/shared/user';
 
 @Component({
   selector: 'app-answer',
@@ -11,16 +14,24 @@ import { Router } from '@angular/router';
 })
 export class AnswerComponent implements OnInit {
   answeringForm: FormGroup;
+  conversation: Conversation;
+  askingUser: User;
   
   constructor(
     private router: Router,
-    private conversationService: ConversationService
+    private authService: AuthService,
+    private conversationService: ConversationService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
     // join the oldest available conversation
     this.conversationService.getNextAvailableConversation().subscribe((conversation: Conversation) => {
-      // this.userService.getUser()
+      this.conversation = conversation;
+      const otherUserId: string = this.conversationService.getOtherUserId(conversation.userIds, this.authService.currentUser._id);
+      this.userService.getUser(otherUserId).subscribe((user: User) => {
+        this.askingUser = user;
+      });
     });
 
     this.answeringForm = new FormGroup({
@@ -31,6 +42,6 @@ export class AnswerComponent implements OnInit {
   answerQuestion(): void {
     //TODO - Update conversation and navigate to it
     const answer: string = this.answeringForm.get('answer').value;
-    this.router.navigate(['/conversations', 123]);
+    this.router.navigate(['/conversations', this.conversation._id]);
   }
 }
