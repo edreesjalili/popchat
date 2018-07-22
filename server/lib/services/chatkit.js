@@ -1,18 +1,18 @@
 const config = require('../../config/config.json');
-
-const chatkit = new require('@pusher/chatkit-server').default(config.chatkit.connectOptions);
+const Chatkit = require('@pusher/chatkit-server');
+const chatkit = new Chatkit.default(config.chatkit.connectOptions);
 
 /**
  * Creates a user on the Chatkit API
- * @param {*} userId The id of the user
+ * @param {*} id The id of the user
  * @param {*} name The name of the user
  * @returns {Promise}
  */
-const createUser = (userId, name) => chatkit.createUser({ userId, name });
+const createUser = (id, name) => chatkit.createUser({ id, name });
 
 /**
  * Creates a batch of users on the Chatkit API
- * @param {Array<{ userId, name }>} users An array containing objects with a userId and name field
+ * @param {Array<{ id, name }>} users An array containing objects with a userId and name field
  * @returns {Promise}
  */
 const createUsers = (users) => chatkit.createUsers({ users });
