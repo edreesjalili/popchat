@@ -46,7 +46,7 @@ export class AnswerComponent implements OnInit {
 
   answerQuestion(): void {
     const answer: string = this.answeringForm.get('answer').value;
-    this.conversationService.updateConversation(this.conversation._id).subscribe((conversation: Conversation) => {
+    this.conversationService.updateConversation(this.conversation).subscribe((conversation: Conversation) => {
       this.chatService.sendMessage(answer, conversation.roomId).then(() => {
         this.router.navigate(['/conversations', this.conversation._id]);
       });

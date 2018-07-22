@@ -75,8 +75,9 @@ export class ConversationService {
     );
   }
 
-  updateConversation(conversationId: string) {
-    return this.http.patch(`/api/v1/conversations/`, { conversationId, hasAnswered: true }).pipe(
+  updateConversation(conversation: Conversation) {
+    conversation.hasAnswered = true;
+    return this.http.patch(`/api/v1/conversations/${conversation._id}`, conversation).pipe(
       map((data: Conversation) => data),
       catchError(error => this.handleError(error))
     );

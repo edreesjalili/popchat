@@ -6,15 +6,15 @@ const routes = function(Conversation) {
 
   conversationRouter.route('/')
     .post(conversationController.createConversation)
-    .get(conversationController.getConversations)
-    .patch(conversationController.updateConversation);
+    .get(conversationController.getConversations);
 
   conversationRouter.route('/join')
     .get(conversationController.joinNextConversation);
 
-  conversationRouter.use('/:conversationId', conversationController.getConversation);
+  conversationRouter.use('/:conversationId', conversationController.findConversation);
   conversationRouter.route('/:conversationId')
-    .get(conversationController.getConversation);
+    .get(conversationController.getConversation)
+    .patch(conversationController.updateConversation);
 
   return conversationRouter;
 };

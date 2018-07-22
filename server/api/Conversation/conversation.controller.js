@@ -1,6 +1,21 @@
 const chatkit = require('../../lib/services/chatkit');
 
 const conversationController = (Conversation) => {
+  const findConversation = function(req, res, next) {
+    Conversation.findById(req.params.conversationId, function(err, conversation) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      else if (conversation) {
+        req.thisConversation = conversation;
+        next();
+      }
+      else {
+        res.status(404).send('No conversation found.');
+      }
+    });
+  }
+
   const createConversation = (req, res) => {
     if (!req.body || !req.body.roomId) {
       res.status(400).send('Bad Request')
@@ -63,16 +78,26 @@ const conversationController = (Conversation) => {
   }
 
   const updateConversation = function (req, res) {
-    Conversation.findByIdAndUpdate(id, { $set: req.body }, null, function (err, conversation) {
+    delete req.body._id;
+
+    for (let key in req.body) {
+      req.thisConversation[key] = req.body[key];
+    }
+
+    req.thisConversation.lastUpdate = new Date();
+    
+    req.thisConversation.save(function(err) {
       if (err) {
-        res.status(500).send('Failed to update conversation.');
-        return;
+        res.status(500).send(err);
       }
-      res.send(conversation);
+      else {
+        res.json(req.thisConversation);
+      }
     });
   }
 
   return {
+    findConversation,
     createConversation,
     joinNextConversation,
     getConversations,
