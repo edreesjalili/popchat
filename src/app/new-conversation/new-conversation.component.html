@@ -1,5 +1,2 @@
-<app-answer *ngIf="!authService.currentUser?.asking" class="text-center"></app-answer>
-<div *ngIf="authService.currentUser?.asking" class="text-center">
-  <h2 class="mb-5">It's your turn to start a conversation</h2>
-  <button class="btn btn-outline-primary mb-3 btn-block" *ngFor="let question of questions" (click)="askQuestion(question)">{{ question }}</button>
-</div>
+<app-answer *ngIf="!authService.currentUser?.asking"></app-answer>
+<app-ask *ngIf="authService.currentUser?.asking"></app-ask>
