@@ -6,7 +6,7 @@
       <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
   </div>
   <div class="messages">
-    <div class="messages-content">
+    <div class="messages-content DivWithScroll">
       <!-- <div class="message new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>' + Fake[i] + '</div> -->
       <div *ngFor="let chat of chats">
         <div class="message new" *ngIf="chat.type!=='joined' && chat.isMe">

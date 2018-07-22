@@ -156,6 +156,7 @@ Messages
     text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
     
     .timestamp {
+      min-width: 100px;
       position: absolute;
       bottom: -15px;
       font-size: 9px;
@@ -344,4 +345,23 @@ Bounce
   to {
     transform: translateY(-10px);
   }
+}
+
+.DivToScroll{   
+  background-color: #F5F5F5;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px 0 4px 0;
+  color: #3B3C3E;
+  font-size: 12px;
+  // font-weight: bold;
+  left: -1px;
+  right:0px;
+  // padding: 3px 7px 5px;
+  
+}
+
+.DivWithScroll{
+  height:120px;
+  overflow:scroll;
+  overflow-x:scroll;
 }
