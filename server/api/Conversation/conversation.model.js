@@ -3,11 +3,11 @@ const mongoose = require('mongoose'),
 
 const conversationModel = new Schema({
   userIds: {
-    type: [Schema.ObjectId]
+    type: [Schema.Types.ObjectId]
   },
   roomId:
   {
-    type: String
+    type: Number
   },
   points: {
     type: Number,
@@ -15,7 +15,7 @@ const conversationModel = new Schema({
   }
 },
   {
-    timestamps: true
+    timestamps: { createdAt: true, updatedAt: true }
   });
 
 conversationModel.static('getNextConversation', cb => this.find({ userIds: { $size: 1 } }, null, { sort: { createdAt: 1 }, limit: 1 }, cb));

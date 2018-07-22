@@ -1,26 +1,28 @@
-const conversationController = (Conversation) => {
-  const findConversation = function(req, res, next) {
-    Conversation.findById(req.params.conversationId, function(err, conversation) {
-      if (err) {
-        res.status(500).send(err);
-      }
-      else if (conversation) {
-        req.thisConversation = conversation;
-        next();
-      }
-      else {
-        res.status(404).send('No conversation found.');
-      }
-    });
-  }
+const chatkit = require('../../lib/services/chatkit');
 
+const conversationController = (Conversation) => {
   const createConversation = (req, res) => {
-    if (!req.body || !req.body.question) {
+    if (!req.body || !req.body.question || !req.body.roomId) {
       res.status(400).send('Bad Request')
       return;
     }
 
-    Conversation.create({ userIds: [req.thisUser] }, (err, conversation) => {
+    conversation.userIds.push(req.thisUser);
+        const handleSave = (saveErr, savedConversation) => {
+          if (saveErr) {
+            res.status(500).send("Failed to save Conversation.");
+            return;
+          }
+          res.json(savedConversation);
+        }
+        chatkit.createRoom(req.thisUser, savedConversation.id, [req.thisUser], true)
+            .then(room => {
+              conversation.roomId = room.id
+              conversation.save(handleSave)
+            })
+            .catch(error => res.status(400).send('Failed to create chat room.'))
+
+    Conversation.create({ userIds: [req.thisUser], roomId: req.body.roomId }, (err, conversation) => {
       if (err) {
         res.status(500).send(err);
         return;
@@ -37,21 +39,17 @@ const conversationController = (Conversation) => {
       } else if (!conversation) {
         res.status(204).send('No Conversations');
       } else {
-        conversation.userIds.push(req.thisUser);
-        conversation.save(saveErr, savedConversation => {
-          chatkit
-          // logic for adding to pusher api
-        });
+        
       }
     });
   };
   
   const getConversations = function(req, res) {
-
     if(!req.query.userId) {
       res.status(400).send("Bad Request");
       return;    
     }
+
     Conversation.find({ userIds: { $in: req.query.userId} }, function(err, conversations) {
       if (err) {
         res.status(500).send(err);
@@ -68,7 +66,6 @@ const conversationController = (Conversation) => {
   }
 
   return {
-    findConversation,
     createConversation,
     joinNextConversation,
     getConversations,
