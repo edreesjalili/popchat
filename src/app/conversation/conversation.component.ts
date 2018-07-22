@@ -59,7 +59,6 @@ export class ConversationComponent implements OnInit {
           this.chatService.subscribeToRoom(+this.conversation.roomId, {
             onNewMessage: (message: IChat) => {
               this.chats.push(message);
-              console.log(this.chats);
             },
           })
           .catch(error => console.log(error));

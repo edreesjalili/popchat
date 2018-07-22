@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { AuthService } from '../auth/shared/auth.service';
 import { ConversationService } from '../conversation/shared/conversation.service';
 import { Conversation } from '../conversation/shared/conversation';
@@ -21,13 +21,24 @@ export class ConversationListComponent implements OnInit {
     private chatService: ChatService,
   ) { }
 
+  getRooms() {
+    this.chatService.getConnection().then(currentUser => {
+      console.log(currentUser.rooms);
+      if (currentUser.rooms[0]) {
+        this.conversationService.getByRoom(this.authService.currentUser._id)
+          .subscribe((conversations: Conversation[]) => this.conversations = conversations);
+      }
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+  }
+
   ngOnInit() {
     if (!this.chatService.isConnected()) {
-      this.chatService.getConnection().then(currentUser => {
-        
-      }).catch((error: any) => {
-        console.log(error)
-      });
+      this.getRooms();
+    } else {
+      this.getRooms();
     }
   }
 }

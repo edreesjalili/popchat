@@ -56,6 +56,27 @@ const conversationController = (Conversation) => {
     });
   };
 
+  const getConversationByRoom = function (req, res) {
+    if (!req.params.roomId) {
+      res.status(400).send("Bad Request");
+      return;
+    }
+
+    console.log("SOMEJKB;GRJSKBFDG")
+    console.log(req.params)
+
+    Conversation.find({ roomId: +req.params.roomId }, function (err, conversations) {
+      if (err) {
+        console.log(err);
+        res.status(500).send(err);
+        return;
+      }
+
+      res.json(conversations);
+
+    });
+  }
+
   const getConversations = function (req, res) {
     if (!req.query.userId) {
       res.status(400).send("Bad Request");
@@ -102,7 +123,8 @@ const conversationController = (Conversation) => {
     joinNextConversation,
     getConversations,
     getConversation,
-    updateConversation
+    updateConversation,
+    getConversationByRoom
   };
 };
 

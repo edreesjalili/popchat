@@ -33,6 +33,13 @@ export class ConversationService {
     );
   }
 
+  getByRoom(roomId: number): Observable<Conversation[]> {
+    return this.http.get(`api/v1/conversations/${roomId}`).pipe(
+      map(data => data as Conversation),
+      catchError(error => this.handleError(error))
+    );
+  }
+
   createConversation(roomId: number): Observable<Conversation> {
     return this.http.post('api/v1/conversations', { roomId }).pipe(
       map(data => data as Conversation),

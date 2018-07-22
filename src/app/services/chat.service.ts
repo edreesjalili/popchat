@@ -13,6 +13,8 @@ export class ChatService {
 
   constructor(private authService: AuthService, private conversationService: ConversationService) {}
 
+  private rooms: number[] = [];
+
   isConnected(): boolean {
     return !!this._currentUser;
   }
@@ -57,7 +59,13 @@ export class ChatService {
       }).then(room => {
         this.conversationService.createConversation(room.id).toPromise().catch(error => console.log(error));
         this.sendMessage(question, room.id);
+        this.rooms.push(room.id);
+
       });
+  }
+
+  getCurrentRooms() {
+    return this.rooms;
   }
 
   getChatManager() {

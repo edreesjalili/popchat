@@ -3,9 +3,9 @@
       Conversations
     </h1>
     <ol>
-      <li *ngFor='let combo of combos'>
-        <mark>{{user.firstName}}</mark>
-        <small>{{user.points}}</small>
+      <li *ngFor='let convo of conversations' [routerLink]="'conversations/' + convo.id">
+        <mark>{{convo.createdByUserId}}</mark>
+        <small>{{convo.createdAt | date: 'short'}}</small>
       </li>
     </ol>
   </div>

@@ -16,6 +16,8 @@ const routes = function(Conversation) {
     .get(conversationController.getConversation)
     .patch(conversationController.updateConversation);
 
+    conversationRouter.route('/room/:roomId').get(conversationController.getConversationByRoom);
+
   return conversationRouter;
 };
 
