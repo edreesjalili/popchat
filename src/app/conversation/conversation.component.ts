@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { Conversation } from './shared/conversation';
 import { IChat } from './shared/chat.interface';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-conversation',
@@ -16,6 +17,7 @@ export class ConversationComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private chatService: ChatService,
     private conversationService: ConversationService
   ) { }
 
@@ -24,6 +26,13 @@ export class ConversationComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.chatService.isConnected()) {
+      this.chatService.getConnection().then(currentUser => {
+        
+      }).catch((error: any) => {
+        console.log(error)
+      });
+    }
 
     this.conversationService.mockConversations().subscribe((messages: IChat[]) => this.chats = messages)
 

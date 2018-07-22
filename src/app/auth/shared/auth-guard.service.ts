@@ -15,19 +15,11 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     if (this.authService.isAuthenticated()) {
-      if (!this.chatService.isConnected()) {
-        this.chatService.getConnection();
-      }
-
       return of(true)
     }
     else {
       return this.authService.getCurrentUser().pipe(
         map((user: User) => {
-          if (!this.chatService.isConnected()) {
-            this.chatService.getConnection();
-          }
-
           return true;
         })
       );

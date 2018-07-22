@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/shared/auth.service';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-new-conversation',
@@ -8,9 +9,17 @@ import { AuthService } from '../auth/shared/auth.service';
 })
 export class NewConversationComponent implements OnInit {
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
+    private chatService: ChatService
   ) { }
 
   ngOnInit() {
+    if (!this.chatService.isConnected()) {
+      this.chatService.getConnection().then(currentUser => {
+        
+      }).catch((error: any) => {
+        console.log(error)
+      });
+    }
   }
 }

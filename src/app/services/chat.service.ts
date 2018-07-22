@@ -12,11 +12,7 @@ export class ChatService {
   private url = 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/960946cb-4763-4185-8e35-4c05a10f722e/token';
 
   constructor(private authService: AuthService, private conversationService: ConversationService) {
-    this._chatManager = new ChatManager({
-      instanceLocator: 'v1:us1:960946cb-4763-4185-8e35-4c05a10f722e',
-      userId: authService.currentUser._id,
-      tokenProvider: new TokenProvider({ url: this.url})
-    });
+    
   }
 
   isConnected(): boolean {
@@ -67,6 +63,8 @@ export class ChatService {
   }
 
   getConnection(): Promise<any> {
+    this.createChatManager();
+    
     return new Promise((resolve, reject) => {
       if (!this._currentUser) {
         this._chatManager.connect()
@@ -78,6 +76,18 @@ export class ChatService {
       } else {
         resolve(this._currentUser);
       }
+    });
+  }
+
+  createChatManager(): void {
+    if (this._chatManager) {
+      return;
+    }
+
+    this._chatManager = new ChatManager({
+      instanceLocator: 'v1:us1:960946cb-4763-4185-8e35-4c05a10f722e',
+      userId: this.authService.currentUser._id,
+      tokenProvider: new TokenProvider({ url: this.url})
     });
   }
 }

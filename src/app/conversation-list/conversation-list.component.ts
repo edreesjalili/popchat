@@ -22,11 +22,12 @@ export class ConversationListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.chatService.getConnection()
-      .then(currentUser => {
+    if (!this.chatService.isConnected()) {
+      this.chatService.getConnection().then(currentUser => {
         
-      })
-      .catch(error => console.log(error));
+      }).catch((error: any) => {
+        console.log(error)
+      });
+    }
   }
-
 }
