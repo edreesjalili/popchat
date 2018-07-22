@@ -9,8 +9,20 @@ import { Conversation } from './conversation';
 export class ConversationService {
 
   constructor(private http: HttpClient) { }
-  getConversation(userId: string): Observable<Conversation> {
+
+  getConversationsForUser(userId: string): Observable<Conversation[]> {
     return this.http.get(`/api/v1/conversations/?userId=${userId}`).pipe(
+      map((response: any) => {
+        return <Conversation[]> response;
+      }),
+      catchError((error: any) => {
+        return this.handleError(error)
+      })
+    );
+  }
+
+  getConversation(conversationId: string): Observable<Conversation> {
+    return this.http.get(`/api/v1/conversations/${conversationId}`).pipe(
       map((response: any) => {
         return new Conversation(response);
       }),

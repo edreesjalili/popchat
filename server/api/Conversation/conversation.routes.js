@@ -6,12 +6,13 @@ const routes = function(Conversation) {
 
   conversationRouter.route('/')
     .post(conversationController.createConversation)
-    .get(conversationController.findConversations)
+    .get(conversationController.getConversations);
+
+  conversationRouter.use('/:conversationId', conversationController.findConversation);
   conversationRouter.route('/:conversationId')
-    // .get(conversationController.getConversation)
+    .get(conversationController.getConversation);
     //todo uncommment when function ready
     // .patch(conversationController.updateConversation)
-    
 
   return conversationRouter;
 };

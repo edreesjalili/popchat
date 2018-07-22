@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { NewConversationComponent } from './new-conversation/new-conversation.component';
 import { AuthGuardService } from './auth/shared/auth-guard.service';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
+import { ConversationComponent } from './conversation/conversation.component';
 
 const routes: Routes = [
   { 
@@ -13,7 +14,12 @@ const routes: Routes = [
   },
   { 
     path: 'conversations', 
-    component: ConversationListComponent, 
+    component: ConversationListComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'conversations/:id', 
+    component: ConversationComponent, 
     canActivate: [AuthGuardService]
   },
   { 

@@ -1,6 +1,19 @@
-const Chatkit = require('@pusher/chatkit-server');
-
 const conversationController = (Conversation) => {
+  const findConversation = function(req, res, next) {
+    Conversation.findById(req.params.conversationId, function(err, conversation) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      else if (conversation) {
+        req.thisConversation = conversation;
+        next();
+      }
+      else {
+        res.status(404).send('No conversation found.');
+      }
+    });
+  }
+
   const createConversation = (req, res) => {
     if (!req.body || !req.body.question) {
       res.status(400).send('Bad Request')
@@ -33,7 +46,7 @@ const conversationController = (Conversation) => {
     });
   };
   
-  const findConversations = function(req, res) {
+  const getConversations = function(req, res) {
 
     if(!req.query.userId) {
       res.status(400).send("Bad Request");
@@ -50,14 +63,17 @@ const conversationController = (Conversation) => {
     });
   }
 
+  const getConversation = function(req, res) {
+    res.json(req.thisConversation);
+  }
 
   return {
+    findConversation,
     createConversation,
     joinNextConversation,
-    findConversations
-
+    getConversations,
+    getConversation
   };
-
 };
 
 module.exports = conversationController

@@ -12,13 +12,15 @@ import { NewConversationComponent } from './new-conversation/new-conversation.co
 import { AuthGuardService } from './auth/shared/auth-guard.service';
 import { AuthService } from './auth/shared/auth.service';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
+import { ConversationComponent } from './conversation/conversation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NewConversationComponent,
-    ConversationListComponent
+    ConversationListComponent,
+    ConversationComponent
   ],
   imports: [
     BrowserModule,

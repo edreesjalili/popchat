@@ -15,7 +15,7 @@ export class ConversationListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.conversationService.getConversation( this.authService.currentUser._id);
+    this.conversationService.getConversationsForUser( this.authService.currentUser._id);
   }
 
 }
