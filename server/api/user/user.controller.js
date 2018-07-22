@@ -51,11 +51,31 @@ const userController = function(User) {
     res.json(req.thisUser);
   }
 
+  const updateUser = function(req, res) {
+    delete req.body._id;
+
+    for (let key in req.body) {
+      req.thisUser[key] = req.body[key];
+    }
+
+    req.thisUser.lastUpdate = new Date();
+    
+    req.thisUser.save(function(err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      else {
+        res.json(req.thisUser);
+      }
+    });
+  }
+
   return {
-    findUser: findUser,
-    isAuthorized: isAuthorized,
-    getUsers: getUsers,
-    getUser: getUser
+    findUser,
+    isAuthorized,
+    getUsers,
+    getUser,
+    updateUser
   }
 }
 
