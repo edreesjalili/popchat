@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as $ from 'jquery';
 
@@ -28,7 +29,9 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientXsrfModule
+    HttpClientXsrfModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthGuardService,

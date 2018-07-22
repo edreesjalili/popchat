@@ -23,13 +23,14 @@ const routes: Routes = [
     component: ConversationComponent, 
     canActivate: [AuthGuardService]
   },
+  {
+    path: 'leaderboard',
+    component: LeaderboardComponent, 
+    canActivate: [AuthGuardService]
+  },
   { 
     path: '', 
     component: HomeComponent, 
-  },
-  {
-    path: 'leaderboard',
-    component: LeaderboardComponent
   },
   { 
     path: '**', 
