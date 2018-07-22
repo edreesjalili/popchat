@@ -33,6 +33,17 @@ export class UserService {
     );
   }
 
+  updateUser(user: User): Observable<User> {
+    return this.http.patch(`/api/v1/users/${user._id}`, user).pipe(
+      map((response: any) => {
+        return new User(response);
+      }),
+      catchError((error: any) => {
+        return this.handleError(error)
+      })
+    );
+  }
+
   /**
    * @private
    * 
