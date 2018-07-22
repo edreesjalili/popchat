@@ -33,30 +33,6 @@ export class ConversationService {
     );
   }
 
-  mockConversations(): Observable<IChat[]> {
-    const messages: IChat[] = [
-      {
-        id: '1',
-        displayName: 'ibz',
-        email: 'ibz@',
-        type: 'human',
-        message: 'Hey! How\'s it going?',
-        createdAt: new Date(),
-        isMe: true,
-      } as IChat,
-      {
-        id: '2',
-        displayName: 'ed',
-        email: 'ibz@',
-        type: 'human',
-        message: 'Not much. wbu?',
-        createdAt: new Date(),
-        isMe: false,
-      } as IChat
-    ];
-    return of(messages);
-  }
-
   createConversation(roomId: number): Observable<Conversation> {
     return this.http.post('api/v1/conversations', { roomId }).pipe(
       map(data => data as Conversation),
