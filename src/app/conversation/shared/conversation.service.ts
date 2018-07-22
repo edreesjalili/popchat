@@ -43,7 +43,17 @@ export class ConversationService {
     );
   }
 
-    /**
+  /**
+   * Returns the user ID in the given array that isn't the provided user ID.
+   * @param userIds 
+   * @param userId 
+   */
+  getOtherUserId(userIds: string[], userId: string): string {
+    const index = userIds.indexOf(userId);
+    return userIds.splice(index, 1)[0];
+  }
+
+  /**
    * @private
    * 
    * Handles an error by creating a new observable that emits it.
