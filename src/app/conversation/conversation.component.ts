@@ -4,7 +4,12 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { Conversation } from './shared/conversation';
 import { IChat } from './shared/chat.interface';
+import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
 import { ChatService } from '../services/chat.service';
+import { AuthService } from '../auth/shared/auth.service';
+import { UserService } from '../user/shared/user.service';
+import { pipe } from '../../../node_modules/@angular/core/src/render3/pipe';
+import { User } from '../user/shared/user';
 
 @Component({
   selector: 'app-conversation',
@@ -14,62 +19,69 @@ import { ChatService } from '../services/chat.service';
 export class ConversationComponent implements OnInit {
   conversation: Conversation;
   chats: IChat[] = [];
+  messageForm: FormGroup;
+  sending: Boolean;
+  currentUserId: string;
+  match: User;
 
   constructor(
     private route: ActivatedRoute,
+    private conversationService: ConversationService,
     private chatService: ChatService,
-    private conversationService: ConversationService
+    private authService: AuthService,
+    private userService: UserService
   ) { }
 
-  handleSend() {
-    console.log('message');
-  }
-
   ngOnInit() {
-    if (!this.chatService.isConnected()) {
-      this.chatService.getConnection().then(currentUser => {
-        
-      }).catch((error: any) => {
-        console.log(error)
-      });
-    }
+    this.sending = false;
 
-    this.conversationService.mockConversations().subscribe((messages: IChat[]) => this.chats = messages)
+    this.messageForm = new FormGroup({
+      message: new FormControl(null)
+    });
 
-    console.log(this.chats)
+    this.currentUserId = this.authService.currentUser._id;
 
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.conversationService.getConversation(params.get('id')))
     ).subscribe((conversation: Conversation) => {
       this.conversation = conversation;
+      if (!this.chatService.isConnected()) {
+        this.chatService.getConnection().then(currentUser => {
+        })
+        .then(() => {
+          this.chatService.getMessages(+this.conversation.roomId, 'older').then((messages: IChat[]) => {
+            this.chats = messages;
+            this.userService.getUser(messages.find(m => !this.isMe(m.id)).sender.id).subscribe(matchedUser => {
+              this.match = matchedUser;
+            });
+          });
+          this.chatService.subscribeToRoom(+this.conversation.roomId, {
+            onNewMessage: (message: IChat) => {
+              this.chats.push(message);
+              console.log(this.chats);
+            },
+          })
+          .catch(error => console.log(error));
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+      }
     });
   }
 
-  sendMessage(message: string) {
-    // this.sending = true;
-    // this._chatService.sendMessage(message)
-    //   .subscribe(resp => {
-    //     this.message = undefined;
-    //     this.sending = false;
-    //   }, err => {
-    //     this.sending = false;
-    //   } );
-
-    const sentMessage: IChat =
-      {
-        id: '1',
-        displayName: 'ibz',
-        email: 'ibz@',
-        type: 'human',
-        message: message,
-        createdAt: new Date(),
-        isMe: true,
-      } as IChat
-
-      this.chats.push(sentMessage);
-
-    console.log('message');
+  isMe(userId: string): Boolean {
+    return userId === this.currentUserId;
   }
 
+  handleSend() {
+    this.sending = true;
+    const input = this.messageForm.controls.message as FormControl;
+    this.chatService.sendMessage(input.value, this.conversation.roomId).then((message: IChat) => {
+      this.chats.push(message);
+      input.reset();
+      this.sending = false;
+    });
+  }
 }

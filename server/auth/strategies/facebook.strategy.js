@@ -65,7 +65,7 @@ module.exports = function() {
 
                 console.log("saved user id" + savedUser._id);
 
-                chatkit.createUser(savedUser._id, savedUser.firstName + savedUser.lastName).catch(function(err) {
+                chatkit.createUser(savedUser._id, savedUser.firstName + " "+ savedUser.lastName).catch(function(err) {
                   console.log(err);
                   console.log("error creating chat user");
                 });

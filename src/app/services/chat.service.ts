@@ -11,9 +11,7 @@ export class ChatService {
   private _currentUser: any;
   private url = 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/960946cb-4763-4185-8e35-4c05a10f722e/token';
 
-  constructor(private authService: AuthService, private conversationService: ConversationService) {
-    
-  }
+  constructor(private authService: AuthService, private conversationService: ConversationService) {}
 
   isConnected(): boolean {
     return !!this._currentUser;
@@ -42,6 +40,10 @@ export class ChatService {
       });
   }
 
+  subscribeToRoom(roomId: number, hooks: any): Promise<any> {
+    return this._currentUser.subscribeToRoom({ roomId, hooks, messageLimit: 100 });
+  }
+
   getMessages(roomId: number, direction: 'newer' | 'older', limit: number = 20): Promise<any> {
     return this._currentUser.fetchMessages({ roomId, direction, limit })
       .catch(error => console.log(error));
@@ -64,7 +66,7 @@ export class ChatService {
 
   getConnection(): Promise<any> {
     this.createChatManager();
-    
+
     return new Promise((resolve, reject) => {
       if (!this._currentUser) {
         this._chatManager.connect()

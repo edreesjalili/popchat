@@ -22,8 +22,8 @@ const conversationModel = new Schema({
     timestamps: { createdAt: true, updatedAt: true }
   });
 
-conversationModel.static('getNextConversation', function(cb) {
-  this.findOne({ userIds: { $size: 1 }, hasAnswered: false }, null, { sort: { createdAt: 1 }}, cb)
+conversationModel.static('getNextConversation', function(userId, cb) {
+  this.findOne({ userIds: { $size: 1, $ne: userId }, hasAnswered: false }, null, { sort: { createdAt: 1 }}, cb)
 });
 
 

@@ -1,33 +1,29 @@
 <div class="chat">
   <div class="chat-title">
-    <h1>Fabio Ottaviani</h1>
-    <h2>Supah</h2>
+    <h1>{{ match?.name }}</h1>
     <figure class="avatar">
-      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
+      <img src="{{ match?.profileImageUrl }}" /></figure>
   </div>
   <div class="messages">
-    <div class="messages-content DivWithScroll">
+    <div class="messages-content">
       <!-- <div class="message new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>' + Fake[i] + '</div> -->
       <div *ngFor="let chat of chats">
-        <div class="message new" *ngIf="chat.type!=='joined' && chat.isMe">
+        <div class="message new" *ngIf="!isMe(chat.senderId)">
             <figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>
-          {{chat.message}}
+          {{chat.text}}
           <div class="timestamp">{{chat.createdAt | date: 'HH:mm aaa'}}</div>
         </div>
-        <div class="message message-personal new"  *ngIf="chat.type!=='joined' && !chat.isMe">
-          <strong>{{chat.displayName}}</strong> <br>
-          {{chat.message}}
+        <div class="message message-personal new"  *ngIf="isMe(chat.sender.id)">
+          <strong>{{chat.sender.name}}</strong> <br>
+          {{chat.text}}
           <div class="timestamp">{{chat.createdAt | date: 'HH:mm aaa'}}</div>
         </div>
-        <p align="center" class="joined"  *ngIf="chat.type==='joined'">
-        <span class="rounded bg-primary text-white">{{chat.displayName}} Joined</span>
-        </p>
       </div>
     </div>
   </div>
-  <div class="message-box">
-    <textarea [(ngModel)]="message" type="text" class="message-input" placeholder="Type message..." (keydown.enter)="sendMessage(message)"></textarea>
-    <button [disabled]="!message || sending" (click)="sendMessage(message)" class="message-submit">Send</button>
+  <div class="message-box" [formGroup]="messageForm">
+    <textarea formControlName="message" type="text" class="message-input" placeholder="Type message..." (keydown.enter)="handleSend"></textarea>
+    <button [disabled]="!message || sending" (click)="handleSend" class="message-submit">Send</button>
   </div>
 
 </div>

@@ -37,7 +37,7 @@ const conversationController = (Conversation) => {
       if (previousConvo) {
         res.json(previousConvo);
       } else {
-        Conversation.getNextConversation((err, conversation) => {
+        Conversation.getNextConversation(req.user._id, (err, conversation) => {
           if (err) {
             res.status(500).send(err);
           }
