@@ -8,6 +8,9 @@ const routes = function(Conversation) {
     .post(conversationController.createConversation)
     .get(conversationController.getConversations);
 
+  conversationRouter.route('/join')
+    .get(conversationController.joinNextConversation);
+
   conversationRouter.use('/:conversationId', conversationController.findConversation);
   conversationRouter.route('/:conversationId')
     .get(conversationController.getConversation);

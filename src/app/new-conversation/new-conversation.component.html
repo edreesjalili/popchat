@@ -1,13 +1,4 @@
-<div *ngIf="!authService.currentUser?.asking" class="text-center">
-  <h2>{{ askingUser.firstName }}</h2>
-  <img src="{{ askingUser.profileImageUrl }}" alt="{{ askingUser.firstName }}" class="rounded-circle mb-3">
-  <p>Some random question that Bob asked you?</p>
-  <form class="mt-5" [formGroup]="answeringForm" (ngSubmit)="answerQuestion()">
-    <div class="form-group">
-      <input type="text" class="form-control form-control-lg" placeholder="Start talking with {{ askingUser.firstName }}..." formControlName="answer">
-    </div>
-  </form>
-</div>
+<app-answer *ngIf="!authService.currentUser?.asking" class="text-center"></app-answer>
 <div *ngIf="authService.currentUser?.asking" class="text-center">
   <h2 class="mb-5">It's your turn to start a conversation</h2>
   <button class="btn btn-outline-primary mb-3 btn-block" *ngFor="let question of questions" (click)="askQuestion(question)">{{ question }}</button>

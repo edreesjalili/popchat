@@ -32,6 +32,17 @@ export class ConversationService {
     );
   }
 
+  getNextAvailableConversation(): Observable<Conversation> {
+    return this.http.get('/api/v1/conversations/join').pipe(
+      map((response: any) => {
+        return new Conversation(response);
+      }),
+      catchError((error: any) => {
+        return this.handleError(error)
+      })
+    );
+  }
+
     /**
    * @private
    * 

@@ -16,6 +16,7 @@ import { ConversationListComponent } from './conversation-list/conversation-list
 import { ConversationComponent } from './conversation/conversation.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { AskComponent } from './ask/ask.component';
+import { AnswerComponent } from './answer/answer.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AskComponent } from './ask/ask.component';
     ConversationListComponent,
     ConversationComponent,
     LeaderboardComponent,
-    AskComponent
+    AskComponent,
+    AnswerComponent
   ],
   imports: [
     BrowserModule,

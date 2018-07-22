@@ -7,6 +7,8 @@ import { AuthService } from '../auth/shared/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../user/shared/user.service';
 import { FormControl } from '@angular/forms';
+import { ConversationService } from '../conversation/shared/conversation.service';
+import { Conversation } from '../conversation/shared/conversation';
 
 @Component({
   selector: 'app-new-conversation',
@@ -16,13 +18,14 @@ import { FormControl } from '@angular/forms';
 export class NewConversationComponent implements OnInit {
   questions: string[];
   answeringForm: FormGroup;
-  askingUser: User;
 
   constructor(
     public authService: AuthService,
     private router: Router,
     private questionService: QuestionService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private conversationService: ConversationService
+  ) { }
 
   ngOnInit() {
     if (this.authService.currentUser.asking) {
@@ -31,17 +34,9 @@ export class NewConversationComponent implements OnInit {
       });
     }
     else {
-      //TODO - Replace with service call. Ex: getPendingConversation
-      this.askingUser = new User({
-        firstName: 'Bob',
-        lastName: 'Jones',
-        email: 'bob.jones@example.com',
-        profileImageUrl: 'http://via.placeholder.com/100/19b5fe/ffffff',
-        asking: true,
-        oauth: new Oauth({
-          platform: 'facebook',
-          id: 1234
-        })
+      // join the oldest available conversation
+      this.conversationService.getNextAvailableConversation().subscribe((conversation: Conversation) => {
+        // this.userService.getUser()
       });
 
       this.answeringForm = new FormGroup({

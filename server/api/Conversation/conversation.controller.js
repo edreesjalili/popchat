@@ -36,10 +36,15 @@ const conversationController = (Conversation) => {
     Conversation.getNextConversation((err, conversation) => {
       if (err) {
         res.status(500).send(err);
-      } else if (!conversation) {
+      }
+      else if (!conversation) {
         res.status(204).send('No Conversations');
-      } else {
-        
+      }
+      else {
+        conversation.userIds.push(req.user._id);
+        conversation.save((saveErr, savedConversation) => {
+          res.json(savedConversation);
+        })
       }
     });
   };
